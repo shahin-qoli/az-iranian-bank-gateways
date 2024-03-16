@@ -17,19 +17,20 @@
  
  1. [درگاه پرداخت بانک ملی ایران (BMI)](https://mmp.sadadpsp.ir/Browse/MerchantRequestForm?@TermType_Shaparakabbr=INT)
  
- 1. [درگاه پرداخت بانک سامان (SEP)](https://www.sep.ir/iemerchantregister)
+ 2. [درگاه پرداخت بانک سامان (SEP)](https://www.sep.ir/iemerchantregister)
  
- 1. [درگاه پرداخت زرین پال](https://next.zarinpal.com/auth/register)
+ 3. [درگاه پرداخت زرین پال](https://next.zarinpal.com/auth/register)
  
- 1. [درگاه پرداخت آی دی پی (IDPay)](https://idpay.ir/s/664153)
+ 4. [درگاه پرداخت آی دی پی (IDPay)](https://idpay.ir/s/664153)
  
- 1. [درگاه پرداخت زیبال](https://zibal.ir)
+ 5. [درگاه پرداخت زیبال](https://zibal.ir)
  
- 1. [درگاه پرداخت باهمتا](https://webpay.bahamta.com?rc=Sv7oH)
+ 6. [درگاه پرداخت باهمتا](https://webpay.bahamta.com?rc=Sv7oH)
  
- 1. [درگاه به پرداخت](http://www.behpardakht.com/)
+ 7. [درگاه به پرداخت](http://www.behpardakht.com/)
  
- 1. [درگاه پی ورژن ۱](https://www.pay.ir/)
+ 8. [درگاه پی ورژن ۱](https://www.pay.ir/)
+ 9. [درگاه پرداخت بانک صادرات](https://www.sepehrpay.com/ig/)
  
 [[_TOC_]]
 
@@ -96,6 +97,9 @@ AZ_IRANIAN_BANK_GATEWAYS = {
             'MERCHANT_CODE': '<YOUR MERCHANT CODE>',
             'X_SANDBOX': 0,  # 0 disable, 1 active
         },
+        'SEPEHR': {
+            'TERMINAL_CODE': '<YOUR TERMINAL CODE>'
+        }
     },
     'IS_SAMPLE_FORM_ENABLE': True, # اختیاری و پیش فرض غیر فعال است
     'DEFAULT': 'BMI',
