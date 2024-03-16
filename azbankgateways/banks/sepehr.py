@@ -14,9 +14,9 @@ class Sepehr(BaseBank):
     def __init__(self,**kwargs):
         super(Sepehr, self).__init__(**kwargs)
         self.set_gateway_currency(CurrencyEnum.IRR)
-        self._token_api_url = "https://sepehr.shaparak.ir:8081/V1/PeymentApi/GetToken"
-        self._payment_url = "https://sepehr.shaparak.ir:8080/Pay"
-        self._verify_api_url = "https://sepehr.shaparak.ir:8081/V1/PeymentApi/Advice"
+        self._token_api_url = "https://sandbox.banktest.ir/saderat/sepehr.shaparak.ir/V1/PeymentApi/GetToken"#"https://sepehr.shaparak.ir:8081/V1/PeymentApi/GetToken"
+        self._payment_url ="https://sandbox.banktest.ir/saderat/sepehr.shaparak.ir/Pay" #"https://sepehr.shaparak.ir:8080/Pay"
+        self._verify_api_url ="https://sandbox.banktest.ir/saderat/sepehr.shaparak.ir/V1/PeymentApi/Advice" #"https://sepehr.shaparak.ir:8081/V1/PeymentApi/Advice"
 
 
     def get_bank_type(self):
@@ -52,8 +52,8 @@ class Sepehr(BaseBank):
             "Amount":self.get_gateway_amount(),
             "callbackURL": self._get_gateway_callback_url(),
             "invoiceID": self.get_tracking_code(),
-            "terminalID": self._terminal_code,
-            "Payload":"oi:%s-ou:%s" % (self.get_tracking_code(), self.get_mobile_number()),
+            "terminalID": int(self._terminal_code),
+            "Payload":{"oi":self.get_tracking_code(),"ou":self.get_mobile_number()},
         }
         return data
 
@@ -64,7 +64,7 @@ class Sepehr(BaseBank):
         super(Sepehr, self).pay()
         data = self.get_pay_data()
         response_json = self._send_data(self._token_api_url, data)
-        if response_json["Status"] == 0:
+        if response_json["Status"] == "0":
             token = response_json["AccessToken"]
             self._set_reference_number(token)
         else:
@@ -77,6 +77,9 @@ class Sepehr(BaseBank):
         super(Sepehr, self).prepare_verify_from_gateway()
         for method in ["GET", "POST", "data"]:
             token = getattr(self.get_request(), method).get("digitalreceipt", None)
+            tracking_code = getattr(self.get_request(), method).get("invoiceid", None)
+            if tracking_code:
+                self._set_tracking_code(tracking_code)
             if token:
                 self._set_reference_number(token)
                 self._set_bank_record()
@@ -131,3 +134,4 @@ class Sepehr(BaseBank):
         else:
             message = "No message found in response"
         self._set_transaction_status_text(message)
+        return response_json
